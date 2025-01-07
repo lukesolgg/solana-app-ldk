@@ -1,11 +1,12 @@
-import type { Metadata } from 'next'
+import { Roboto } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import './globals.css'
 
-export const metadata: Metadata = {
-  title: 'Mobile App',
-  description: 'A mobile-first web application',
-}
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function RootLayout({
   children,
@@ -14,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50">
+      <body className={`${roboto.className} bg-gray-50`}>
         <div className="flex flex-col min-h-screen">
           <main className="flex-grow">
             {children}
