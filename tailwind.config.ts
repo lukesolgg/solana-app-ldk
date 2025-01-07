@@ -13,7 +13,7 @@ export default {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        mono: ['var(--font-roboto-mono)', 'monospace'],
+        geo: ["Geo", "serif"],
       },
     },
   },
