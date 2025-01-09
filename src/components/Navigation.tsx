@@ -20,7 +20,7 @@ export default function Navigation() {
           <Repeat size={24} />
           <span className="text-xs mt-1">Swap</span>
         </Link>
-        <Link href="/purchase"
+        <Link href="/purchase-sol"
           className={`flex flex-col items-center ${pathname === '/purchase' ? 'text-blue-500' : 'text-gray-200'}`}>
           <CreditCard size={24} />
           <span className="text-xs mt-1">Purchase</span>
