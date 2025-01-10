@@ -1,49 +1,167 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HeaderIcons from '../../components/ui/HeaderIcons';
+import { ArrowUpDown, X } from 'lucide-react';
+
+type Currency = {
+  symbol: string;
+  balance: string;
+};
+
+const currencies: Currency[] = [
+  { symbol: 'SOL', balance: '11.50' },
+  { symbol: 'USDC', balance: '21,536' },
+  { symbol: 'JUP', balance: '245,340.30' },
+  { symbol: 'GIGA', balance: '51.52' },
+  { symbol: 'LOCKIN', balance: '3,311,780.05' }
+];
+
+const tokenPrices: { [key: string]: number } = {
+  'SOL': 175,
+  'USDC': 1,
+  'JUP': 1,
+  'GIGA': 0.07,
+  'LOCKIN': 0.03
+};
 
 export default function SwapPage() {
-  const [selectedBox, setSelectedBox] = useState<'SOL' | 'USDC' | null>(null);
-  const [solAmount, setSolAmount] = useState('0');
-  const [usdcAmount, setUsdcAmount] = useState('0');
-  const [isReversed, setIsReversed] = useState(false);
+  const [selectedBox, setSelectedBox] = useState<string | null>(null);
+  const [amount1, setAmount1] = useState('0');
+  const [amount2, setAmount2] = useState('0');
+  const [currency1, setCurrency1] = useState(currencies[0]);
+  const [currency2, setCurrency2] = useState(currencies[1]);
+  const [showDropdown1, setShowDropdown1] = useState(false);
+  const [showDropdown2, setShowDropdown2] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const convertAmount = (amount: string, from: Currency, to: Currency) => {
+    if (amount === '' || amount === '0') return '0';
+    const fromPrice = tokenPrices[from.symbol];
+    const toPrice = tokenPrices[to.symbol];
+    const fromValueUSD = parseFloat(amount) * fromPrice;
+    const convertedAmount = (fromValueUSD / toPrice).toFixed(6);
+    // Remove trailing zeros after decimal
+    return convertedAmount.replace(/\.?0+$/, '');
+  };
 
   const handleNumberClick = (num: string) => {
     if (!selectedBox) return;
     
-    const currentAmount = selectedBox === 'SOL' ? solAmount : usdcAmount;
+    const currentAmount = selectedBox === 'top' ? amount1 : amount2;
+    const setAmount = selectedBox === 'top' ? setAmount1 : setAmount2;
+    const otherSetAmount = selectedBox === 'top' ? setAmount2 : setAmount1;
+    const fromCurrency = selectedBox === 'top' ? currency1 : currency2;
+    const toCurrency = selectedBox === 'top' ? currency2 : currency1;
+  
+    // Handle decimal point
+    if (num === '.') {
+      if (currentAmount.includes('.')) return;
+      const newAmount = currentAmount === '0' ? '0.' : currentAmount + '.';
+      setAmount(newAmount);
+      otherSetAmount(convertAmount(newAmount, fromCurrency, toCurrency));
+      return;
+    }
+  
+    // Handle numbers
     const newAmount = currentAmount === '0' ? num : currentAmount + num;
-    
-    if (selectedBox === 'SOL') {
-      setSolAmount(newAmount);
-    } else {
-      setUsdcAmount(newAmount);
+    setAmount(newAmount);
+    otherSetAmount(convertAmount(newAmount, fromCurrency, toCurrency));
+  };
+
+  useEffect(() => {
+    if (selectedBox === 'top') {
+      setAmount2(convertAmount(amount1, currency1, currency2));
+    } else if (selectedBox === 'bottom') {
+      setAmount1(convertAmount(amount2, currency2, currency1));
+    }
+  }, [currency1, currency2]);
+
+  const handleConfirm = () => {
+    setIsConfirmed(true);
+    setTimeout(() => {
+      setIsConfirmed(false);
+    }, 15000);
+  };
+
+  const handleSwap = () => {
+    // Swap currencies
+    const tempCurrency = currency1;
+    setCurrency1(currency2);
+    setCurrency2(tempCurrency);
+  
+    // Swap amounts
+    const tempAmount = amount1;
+    setAmount1(amount2);
+    setAmount2(tempAmount);
+  
+    // Update selected box if one is selected
+    if (selectedBox === 'top') {
+      setSelectedBox('bottom');
+    } else if (selectedBox === 'bottom') {
+      setSelectedBox('top');
     }
   };
 
-  const CurrencyBox = ({ type }: { type: 'SOL' | 'USDC' }) => (
-    <div 
-      className={`bg-[#3a0066] mt-16 p-4 rounded-lg shadow-lg cursor-pointer ${
-        selectedBox === type ? 'ring-2 ring-blue-500' : ''
-      }`}
-      onClick={() => setSelectedBox(type)}
-    >
-      <div className="flex justify-between">
-        <div>
-          <h2 className="text-white text-xl">{type}</h2>
-          <p className="text-gray-400 text-sm">
-            Balance: {type === 'SOL' ? '1.50 SOL' : '1,536 USDC'}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-white text-xl">
-            {type === 'SOL' ? solAmount : usdcAmount}
-          </p>
-          <p className="text-gray-400">$0.00</p>
+
+  const CurrencyBox = ({ position }: { position: 'top' | 'bottom' }) => {
+    const isTop = position === 'top';
+    const currentCurrency = isTop ? currency1 : currency2;
+    const setCurrentCurrency = isTop ? setCurrency1 : setCurrency2;
+    const dropdownVisible = isTop ? showDropdown1 : showDropdown2;
+    const setDropdownVisible = isTop ? setShowDropdown1 : setShowDropdown2;
+    const currentAmount = isTop ? amount1 : amount2;
+
+    return (
+      <div className="relative mt-16">
+      <div 
+        className={`bg-[#3a0066] p-4 py-6 rounded-lg shadow-lg cursor-pointer ${
+          selectedBox === position ? 'ring-2 ring-blue-500' : ''
+        }`}
+        onClick={() => setSelectedBox(position)}
+      >
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <span className="text-white text-xl">{currentCurrency.symbol}</span>
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setDropdownVisible(!dropdownVisible);
+              }}
+              className="ml-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          <div className="text-right">
+            <p className="text-white text-xl">{currentAmount}</p>
+            <span className="text-gray-400">Balance: {currentCurrency.balance}</span>
+          </div>
         </div>
       </div>
+
+      {/* Dropdown Menu */}
+      {dropdownVisible && (
+        <div className="absolute mt-2 w-full bg-[#3a0066] rounded-lg shadow-xl z-50">
+          {currencies.map((curr) => (
+            <button
+              key={curr.symbol}
+              className="w-full px-4 py-2 text-left text-white hover:bg-[#4a0086] first:rounded-t-lg last:rounded-b-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentCurrency(curr);
+                setDropdownVisible(false);
+              }}
+            >
+              {curr.symbol} - {curr.balance}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
+};
 
   return (
     <div className="min-h-screen bg-[#290055] flex flex-col">
@@ -53,81 +171,77 @@ export default function SwapPage() {
           alt="background" 
           className="absolute inset-0 w-full h-full object-cover opacity-10" 
         />
-        <img 
-          src="/noise.png" 
-          alt="noise" 
-          className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay"
-        />
-        <img 
-          src="/grid.png" 
-          alt="grid" 
-          className="z-10"
-        />
       </div>
 
       <HeaderIcons />
 
       <div className="flex flex-col px-4 h-full">
-  <div className="space-y-6 my-4">
-    {/* First Currency Box */}
-    {isReversed ? <CurrencyBox type="USDC" /> : <CurrencyBox type="SOL" />}
-    
-    {/* Centered Swap Button */}
-    <div className="flex justify-center">
-      <button 
-        onClick={() => setIsReversed(!isReversed)}
-        className="bg-[#3a0066] rounded-full shadow-lg hover:bg-[#4a0086] transition-colors"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-6 w-6 text-white" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" 
-          />
-        </svg>
-      </button>
-    </div>
+        <div className="space-y-4 my-4">
+          {/* First Currency Box */}
+          <CurrencyBox position="top" />
+          
+          {/* Centered Swap Button */}
+          <div className="flex justify-center">
+  <button 
+    onClick={handleSwap}
+    className="bg-[#3a0066] p-2 rounded-full shadow-lg hover:bg-[#4a0086] transition-colors"
+  >
+    <ArrowUpDown className="h-6 w-6 text-white" />
+  </button>
+</div>
 
-    {/* Second Currency Box */}
-    {isReversed ? <CurrencyBox type="SOL" /> : <CurrencyBox type="USDC" />}
-  </div>
-
-         {/* Confirm Button */}
-         <button
-          onClick={() => console.log('Swap confirmed')}
-          className="w-full bg-gradient-to-r from-[#4C1D95] to-[#6D28D9] text-white font-bold py-4 px-6 rounded-lg shadow-lg my-2"
-        >
-          Confirm Swap
-        </button>
-
-        {/* Keypad */}
-        <div className="grid grid-cols-3 gap-2 mt-4">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'].map((num) => (
-            <button
-              key={num}
-              onClick={() => handleNumberClick(num.toString())}
-              className="bg-[#3a0066] text-white rounded-lg shadow-lg text-lg h-[70px]"
-            >
-              {num}
-            </button>
-          ))}
-          <button 
-            className="bg-[#3a0066] text-white rounded-lg shadow-lg h-[70px]"
-            onClick={() => {
-              if (selectedBox === 'SOL') setSolAmount('0');
-              if (selectedBox === 'USDC') setUsdcAmount('0');
-            }}
-          >
-            Clear
-          </button>
+          {/* Second Currency Box */}
+          <CurrencyBox position="bottom" />
         </div>
+
+        {/* Confirm Button */}
+        <>
+  <button
+    onClick={handleConfirm}
+    className={`w-full font-bold py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
+      isConfirmed 
+        ? 'bg-green-500 hover:bg-green-600' 
+        : 'bg-gradient-to-r from-[#4C1D95] to-[#6D28D9] hover:from-[#5D2BA6] hover:to-[#7E39EA]'
+    }`}
+  >
+    {isConfirmed ? 'Confirmed!' : 'Confirm Swap'}
+  </button>
+
+  {/* Popup notification */}
+{isConfirmed && (
+  <div className="fixed top-16 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeIn flex items-center justify-between gap-4">
+    <span>Transaction confirmed!</span>
+    <button 
+      onClick={() => setIsConfirmed(false)}
+      className="hover:bg-green-600 rounded-full p-1"
+    >
+      <X className="h-4 w-4" />
+    </button>
+  </div>
+)}
+</>
+
+        {/* Keypad section */}
+<div className="grid grid-cols-3 gap-2 mt-4">
+  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'].map((num) => (
+    <button
+      key={num}
+      onClick={() => handleNumberClick(num.toString())}
+      className="bg-[#3a0066] text-white rounded-lg shadow-lg text-lg h-[70px]"
+    >
+      {num}
+    </button>
+  ))}
+  <button 
+    className="bg-[#3a0066] text-white rounded-lg shadow-lg h-[70px]"
+    onClick={() => {
+      setAmount1('0');
+      setAmount2('0');
+    }}
+  >
+    Clear
+  </button>
+</div>
       </div>
     </div>
   );
