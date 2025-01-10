@@ -25,7 +25,7 @@ const tokenPrices: { [key: string]: number } = {
 };
 
 export default function SwapPage() {
-  const [selectedBox, setSelectedBox] = useState<string | null>(null);
+  const [selectedBox, setSelectedBox] = useState<string | null>('top');
   const [amount1, setAmount1] = useState('0');
   const [amount2, setAmount2] = useState('0');
   const [currency1, setCurrency1] = useState(currencies[0]);
@@ -33,6 +33,7 @@ export default function SwapPage() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const convertAmount = (amount: string, from: Currency, to: Currency) => {
     if (amount === '' || amount === '0') return '0';
@@ -77,10 +78,17 @@ export default function SwapPage() {
   }, [currency1, currency2]);
 
   const handleConfirm = () => {
+    if (amount1 === '0' && amount2 === '0') {
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
     setIsConfirmed(true);
-    setTimeout(() => {
-      setIsConfirmed(false);
-    }, 15000);
+    // Reset values
+    setAmount1('0');
+    setAmount2('0');
+    setSelectedBox(null);
+    setTimeout(() => setIsConfirmed(false), 5000);
   };
 
   const handleSwap = () => {
@@ -196,16 +204,21 @@ export default function SwapPage() {
 
         {/* Confirm Button */}
         <>
-  <button
-    onClick={handleConfirm}
-    className={`w-full font-bold py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
-      isConfirmed 
-        ? 'bg-green-500 hover:bg-green-600' 
-        : 'bg-gradient-to-r from-[#4C1D95] to-[#6D28D9] hover:from-[#5D2BA6] hover:to-[#7E39EA]'
-    }`}
-  >
-    {isConfirmed ? 'Confirmed!' : 'Confirm Swap'}
-  </button>
+        <button
+  onClick={handleConfirm}
+  className={`w-full font-bold py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
+    isConfirmed 
+      ? 'bg-green-500 hover:bg-green-600' 
+      : 'bg-gradient-to-r from-[#4C1D95] to-[#6D28D9] hover:from-[#5D2BA6] hover:to-[#7E39EA]'
+  }`}
+>
+  {isConfirmed 
+    ? 'Confirmed!' 
+    : amount1 === '0' && amount2 === '0' 
+      ? 'Enter Amount' 
+      : 'Confirm Swap'
+  }
+</button>
 
   {/* Popup notification */}
 {isConfirmed && (
@@ -214,6 +227,17 @@ export default function SwapPage() {
     <button 
       onClick={() => setIsConfirmed(false)}
       className="hover:bg-green-600 rounded-full p-1"
+    >
+      <X className="h-4 w-4" />
+    </button>
+  </div>
+)}
+{showError && (
+  <div className="fixed top-16 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeIn flex items-center justify-between gap-4">
+    <span>Please Enter Amount & Try Again</span>
+    <button 
+      onClick={() => setShowError(false)}
+      className="hover:bg-red-600 rounded-full p-1"
     >
       <X className="h-4 w-4" />
     </button>
