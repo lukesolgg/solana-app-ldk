@@ -40,7 +40,7 @@ export default function PurchaseSol() {
   const solAmount = (parseFloat(amount) / 171).toFixed(3);
 
   return (
-    <div className={`min-h-screen bg-slate-900 flex flex-col`}>
+    <div className={`min-h-screen bg-[#290055] flex flex-col`}>
       <HeaderIcons />
 
       <div className="mt-24 px-4 flex flex-col h-full">

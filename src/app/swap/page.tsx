@@ -122,8 +122,8 @@ export default function SwapPage() {
     return (
       <div className="relative mt-16">
       <div 
-        className={`bg-[#3a0066] p-4 py-6 rounded-lg shadow-lg cursor-pointer ${
-          selectedBox === position ? 'ring-2 ring-blue-500' : ''
+        className={`bg-[#2c0a46] p-4 py-6 rounded-lg shadow-lg cursor-pointer ${
+          selectedBox === position ? 'ring-2 ring-blue-900' : ''
         }`}
         onClick={() => setSelectedBox(position)}
       >
@@ -194,7 +194,7 @@ export default function SwapPage() {
     onClick={handleSwap}
     className="bg-[#3a0066] p-2 rounded-full shadow-lg hover:bg-[#4a0086] transition-colors"
   >
-    <ArrowUpDown className="h-6 w-6 text-white" />
+    <ArrowUpDown className="h-6 w-6 text-blue-600" />
   </button>
 </div>
 
@@ -209,7 +209,7 @@ export default function SwapPage() {
   className={`w-full font-bold text-white py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
     isConfirmed 
       ? 'bg-green-500 hover:bg-green-600' 
-      : 'bg-gradient-to-r from-[#4C1D95] to-[#6D28D9] hover:from-[#5D2BA6] hover:to-[#7E39EA]'
+      : 'bg-gradient-to-r from-blue-400 to-blue-600 hover:from-[#5D2BA6] hover:to-[#7E39EA]'
   }`}
 >
   {isConfirmed 
@@ -251,19 +251,19 @@ export default function SwapPage() {
     <button
       key={num}
       onClick={() => handleNumberClick(num.toString())}
-      className="bg-[#3a0066] text-white rounded-lg shadow-lg text-lg h-[70px]"
+      className="bg-[#3a0066]/20 text-white rounded-lg text-4xl font-extrabold h-[70px]"
     >
       {num}
     </button>
   ))}
   <button 
-    className="bg-[#3a0066] text-white rounded-lg shadow-lg h-[70px]"
+    className="bg-[#3a0066]/20 text-white rounded-lg font-extrabold h-[70px]"
     onClick={() => {
       setAmount1('0');
       setAmount2('0');
     }}
   >
-    Clear
+    CLEAR
   </button>
 </div>
       </div>
