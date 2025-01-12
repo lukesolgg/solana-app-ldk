@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { X, Trash2 } from 'lucide-react';
+import { X, Trash2, Delete } from 'lucide-react';
 import HeaderIcons from '@/components/ui/HeaderIcons';
 
 export default function PurchaseSol() {
@@ -50,7 +50,7 @@ export default function PurchaseSol() {
         <p className="text-gray-400 text-center mb-6">1 SOL = 171 GBP</p>
 
         {/* Updated Currency Box */}
-        <div className="bg-slate-800 p-4 rounded-lg shadow-lg mb-6">
+        <div className="bg-[#2c0a46] p-4 rounded-lg shadow-lg mb-6">
           <div className="flex flex-col items-center">
             <div className="mb-1">
               <span className="text-white text-xl">{amount} GBP</span>
@@ -59,12 +59,24 @@ export default function PurchaseSol() {
           </div>
         </div>
 
+        
+
+        {/* Buy Button */}
+        <button 
+          className={`w-full  py-4 px-6 font-bold  ${
+            isConfirmed ? 'bg-green-500' : 'bg-gradient-to-r from-blue-400 to-blue-600 hover:from-[#5D2BA6] hover:to-[#7E39EA]'
+          } text-white rounded-lg shadow-lg mb-6`}
+          onClick={handleConfirm}
+        >
+          {isConfirmed ? 'Confirmed!' : amount === '0' ? 'Enter Amount' : 'Buy SOL'}
+        </button>
+
         {/* Quick Amount Buttons */}
         <div className="flex justify-between gap-3 mb-6">
           {['£100', '£250', '£1000'].map((amt) => (
             <button 
               key={amt} 
-              className="flex-1 bg-slate-800 py-2 text-white rounded-lg shadow-lg"
+              className="flex-1 bg-[#2c0a46] text-white rounded-lg font-bold py-2"
               onClick={() => handleQuickAmount(amt)}
             >
               {amt}
@@ -72,33 +84,23 @@ export default function PurchaseSol() {
           ))}
         </div>
 
-        {/* Buy Button */}
-        <button 
-          className={`w-full  py-4 px-6 font-bold  ${
-            isConfirmed ? 'bg-green-500' : 'bg-gradient-to-r from-purple-800 to-purple-900 hover:from-[#5D2BA6] hover:to-[#7E39EA]'
-          } text-white rounded-lg shadow-lg mb-6`}
-          onClick={handleConfirm}
-        >
-          {isConfirmed ? 'Confirmed!' : amount === '0' ? 'Enter Amount' : 'Buy SOL'}
-        </button>
-
         {/* Keypad */}
         <div className="mt-auto pb-4 h-[50vh]">
           <div className="grid grid-cols-3 gap-2">
             {[1,2,3,4,5,6,7,8,9,'.',0].map((num) => (
               <button 
                 key={num} 
-                className=" text-white font-extrabold text-lg h-[70px]"
+                className=" bg-[#3a0066]/30 text-white rounded-lg text-4xl font-extrabold h-[70px]"
                 onClick={() => handleNumberClick(num.toString())}
               >
                 {num}
               </button>
             ))}
             <button 
-              className="text-white h-[70px]"
+              className="bg-[#3a0066]/30 text-white rounded-lg font-extrabold h-[70px] flex items-center justify-center"
               onClick={() => setAmount('0')}
             >
-              <Trash2 className="mx-auto" size={20} />
+              <Delete className="mx-auto" size={20} />
             </button>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 w-full bg-[#48345D] border-t">
+    <nav className="fixed bottom-0 w-full bg-[#2c0a46] border-t border-blue-900">
       <div className="flex justify-around items-center h-16">
         <Link href="/" 
           className={`flex flex-col items-center ${pathname === '/' ? 'text-blue-500' : 'text-gray-200'}`}>

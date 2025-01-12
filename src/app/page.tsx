@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Logosol from '../assets/images/Logosol.png';
-import Background from '../assets/images/bgimagesol1 3.png';
+import Background from '../assets/images/mainbgbg.png';
 import Heading from '@/components/ui/Heading';
 import Button from '@/components/ui/Button';
 import HeaderIcons from '@/components/ui/HeaderIcons';
@@ -23,18 +23,7 @@ export default function Home() {
       <div className="min-h-screen flex flex-col">
         <HeaderIcons />
         
-        <div className="flex-1 flex flex-col items-center justify-center">
-          {/* Logo Container */}
-          <div className="mb-8">
-            <Image
-              src={Logosol}
-              alt="Logo"
-              width={200}
-              height={80}
-              className="z-10"
-              priority
-            />
-          </div>
+        <div className="flex-1 flex flex-col items-center justify-center mt-36">
         
           {/* Text Content */}
           <Heading text="Welcome to the Home of LDK" className="mb-4 z-10" />

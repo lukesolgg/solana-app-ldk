@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import HeaderIcons from '../../components/ui/HeaderIcons';
-import { ArrowUpDown, X } from 'lucide-react';
+import { ArrowUpDown, X, Trash2, Delete } from 'lucide-react';
 
 type Currency = {
   symbol: string;
@@ -108,6 +108,36 @@ export default function SwapPage() {
     } else if (selectedBox === 'bottom') {
       setSelectedBox('top');
     }
+  };
+
+  const handleDelete = () => {
+    if (amount1 === '0') return;
+    if (amount1.length === 1) {
+      setAmount1('0');
+      setAmount2('0');
+      return;
+    }
+    const newAmount = amount1.slice(0, -1);
+    setAmount1(newAmount);
+    setAmount2((parseFloat(newAmount) * 0.9).toFixed(2));
+  };
+
+  const handleClear = () => {
+    setAmount1('0');
+    setAmount2('0');
+  };
+
+  const handlePercentage = (percentage: number) => {
+    const maxAmount = 1000; // Replace with actual balance
+    const amount = (maxAmount * (percentage / 100)).toFixed(2);
+    setAmount1(amount);
+    setAmount2((parseFloat(amount) * 0.9).toFixed(2));
+  };
+
+  const handleMax = () => {
+    const maxAmount = 1000; // Replace with actual balance
+    setAmount1(maxAmount.toString());
+    setAmount2((maxAmount * 0.9).toFixed(2));
   };
 
 
@@ -245,27 +275,52 @@ export default function SwapPage() {
 )}
 </>
 
-        {/* Keypad section */}
-<div className="grid grid-cols-3 gap-2 mt-4">
-  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'].map((num) => (
-    <button
-      key={num}
-      onClick={() => handleNumberClick(num.toString())}
-      className="bg-[#3a0066]/20 text-white rounded-lg text-4xl font-extrabold h-[70px]"
-    >
-      {num}
-    </button>
-  ))}
-  <button 
-    className="bg-[#3a0066]/20 text-white rounded-lg font-extrabold h-[70px]"
-    onClick={() => {
-      setAmount1('0');
-      setAmount2('0');
-    }}
-  >
-    CLEAR
-  </button>
-</div>
+        {/* Percentage Buttons */}
+    <div className="grid grid-cols-4 gap-2 mt-2">
+      <button
+        onClick={handleMax}
+        className="bg-[#2c0a46] text-white rounded-lg font-bold py-2"
+      >
+        MAX
+      </button>
+      <button
+        onClick={() => handlePercentage(50)}
+        className="bg-[#2c0a46] text-white rounded-lg font-bold py-2"
+      >
+        50%
+      </button>
+      <button
+        onClick={() => handlePercentage(25)}
+        className="bg-[#2c0a46] text-white rounded-lg font-bold py-2"
+      >
+        25%
+      </button>
+      <button
+        onClick={handleClear}
+        className="bg-[#2c0a46] text-white rounded-lg font-bold py-2"
+      >
+        CLEAR
+      </button>
+    </div>
+
+    {/* Keypad section */}
+    <div className="grid grid-cols-3 gap-2 mt-4">
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'].map((num) => (
+        <button
+          key={num}
+          onClick={() => handleNumberClick(num.toString())}
+          className="bg-[#3a0066]/30 text-white rounded-lg text-4xl font-extrabold h-[60px]"
+        >
+          {num}
+        </button>
+      ))}
+      <button 
+        className="bg-[#3a0066]/30 text-white rounded-lg font-extrabold h-[60px] flex items-center justify-center"
+        onClick={handleDelete}
+      >
+        <Delete size={24} />
+      </button>
+    </div>
       </div>
     </div>
   );
