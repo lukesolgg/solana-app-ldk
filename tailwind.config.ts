@@ -14,6 +14,7 @@ export default {
       },
       fontFamily: {
         geo: ["Geo", "serif"],
+        'space-mono': ['var(--font-space-mono)'],
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',

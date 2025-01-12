@@ -206,7 +206,7 @@ export default function SwapPage() {
         <>
         <button
   onClick={handleConfirm}
-  className={`w-full font-bold py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
+  className={`w-full font-bold text-white py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
     isConfirmed 
       ? 'bg-green-500 hover:bg-green-600' 
       : 'bg-gradient-to-r from-[#4C1D95] to-[#6D28D9] hover:from-[#5D2BA6] hover:to-[#7E39EA]'
