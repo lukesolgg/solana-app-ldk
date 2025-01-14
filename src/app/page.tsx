@@ -4,6 +4,7 @@ import Heading from '@/components/ui/Heading';
 import Button from '@/components/ui/Button';
 import HeaderIcons from '@/components/ui/HeaderIcons';
 import SubHeading from '@/components/ui/SubHeading';
+import Navigation from '@/components/Navigation';
 
 export default function Home() {
   return (
@@ -38,6 +39,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Navigation />
     </div>
   );
 }
