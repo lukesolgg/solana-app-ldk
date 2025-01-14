@@ -203,14 +203,7 @@ export default function SwapPage() {
 };
 
   return (
-    <div className="min-h-screen bg-[#290055] flex flex-col">
-      <div className="relative">
-        <img 
-          src="/background.png" 
-          alt="background" 
-          className="absolute inset-0 w-full h-full object-cover opacity-10" 
-        />
-      </div>
+    <div className="h-screen fixed inset-0 overflow-hidden bg-[#290055] flex flex-col">
 
       <HeaderIcons />
 
