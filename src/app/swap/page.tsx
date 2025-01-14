@@ -151,7 +151,7 @@ export default function SwapPage() {
     const currentAmount = isTop ? amount1 : amount2;
 
     return (
-      <div className="relative mt-16">
+      <div className="relative">
       <div 
         className={`bg-[#2c0a46] p-1 py-2 md:p-4 md:py-6 rounded-lg shadow-lg cursor-pointer ${
           selectedBox === position ? 'ring-2 ring-blue-900' : ''
@@ -160,7 +160,7 @@ export default function SwapPage() {
       >
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <span className="text-white text-xl">{currentCurrency.symbol}</span>
+            <span className="text-white text-xs md:text-sm">{currentCurrency.symbol}</span>
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -174,7 +174,7 @@ export default function SwapPage() {
             </button>
           </div>
           <div className="text-right">
-            <p className="text-white text-xl">{currentAmount}</p>
+            <p className="text-white text-xs md:text-sm">{currentAmount}</p>
             <span className="text-gray-400">Balance: {currentCurrency.balance}</span>
           </div>
         </div>
@@ -204,8 +204,6 @@ export default function SwapPage() {
 
   return (
     <div className="h-screen fixed inset-0 overflow-hidden bg-[#290055] flex flex-col">
-
-      <HeaderIcons />
 
       <div className="flex flex-col px-4 h-full">
         <div className="space-y-3 md:space-y-4 my-3 md:my-4">
