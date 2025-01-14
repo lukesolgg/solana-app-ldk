@@ -298,18 +298,18 @@ export default function SwapPage() {
     </div>
 
     {/* Keypad section */}
-    <div className="grid grid-cols-3 gap-2 mt-4">
+    <div className="grid grid-cols-3 gap-2 md:gap-3 mt-4">
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'].map((num) => (
         <button
           key={num}
           onClick={() => handleNumberClick(num.toString())}
-          className="bg-[#3a0066]/30 text-white rounded-lg text-4xl font-extrabold h-[60px]"
+          className="bg-[#3a0066]/30 text-white rounded-lg text-2xl md:text-4xl font-extrabold h-[50px] md:h-[60px]"
         >
           {num}
         </button>
       ))}
       <button 
-        className="bg-[#3a0066]/30 text-white rounded-lg font-extrabold h-[60px] flex items-center justify-center"
+        className="bg-[#3a0066]/30 text-white rounded-lg font-extrabold h-[50px] md:h-[60px] flex items-center justify-center"
         onClick={handleDelete}
       >
         <Delete size={24} />
