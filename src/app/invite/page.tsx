@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Logosol from '../../assets/images/Logosol.png';
 import HeaderIcons from '@/components/ui/HeaderIcons';
 import { Check } from 'lucide-react';
+import Navigation from '@/components/Navigation';
 
 const InvitePage = () => {
   const [showCopied, setShowCopied] = useState(false);
@@ -82,6 +83,7 @@ const InvitePage = () => {
           <span>Link Copied</span>
         </div>
       )}
+      <Navigation />
     </div>
   );
 };

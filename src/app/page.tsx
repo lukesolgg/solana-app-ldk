@@ -8,7 +8,7 @@ import Navigation from '@/components/Navigation';
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="h-screen fixed inset-0 overflow-hidden">
       <div className="fixed inset-0 -z-10">
       <Image
         src={Background}
@@ -20,12 +20,12 @@ export default function Home() {
       />
       </div>
       
-      <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#290055] via-[#290055] to-transparent z-0" />
+      <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#290055] via-[#290055] to-transparent z-0" />
       
-      <div className="min-h-screen flex flex-col">
+      <div className="h-screen flex flex-col">
         <HeaderIcons />
         
-        <div className="flex-1 flex flex-col items-center justify-center mt-20 md:mt-36">
+        <div className="flex-1 flex flex-col items-center justify-center mt-12 md:mt-24">
         
           {/* Text Content */}
           <Heading text="Welcome to the Home of LDK" className="z-10" />

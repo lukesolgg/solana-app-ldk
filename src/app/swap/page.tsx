@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import HeaderIcons from '../../components/ui/HeaderIcons';
 import { ArrowUpDown, X, Trash2, Delete } from 'lucide-react';
+import Navigation from '@/components/Navigation';
 
 type Currency = {
   symbol: string;
@@ -322,6 +323,7 @@ export default function SwapPage() {
       </button>
     </div>
       </div>
+      <Navigation />
     </div>
   );
 }

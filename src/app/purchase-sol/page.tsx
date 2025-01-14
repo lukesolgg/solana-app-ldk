@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { X, Trash2, Delete } from 'lucide-react';
 import HeaderIcons from '@/components/ui/HeaderIcons';
+import Navigation from '@/components/Navigation';
 
 export default function PurchaseSol() {
   const [amount, setAmount] = useState('0');
@@ -129,6 +130,7 @@ export default function PurchaseSol() {
           </button>
         </div>
       )}
+      <Navigation />
     </div>
   );
 }
