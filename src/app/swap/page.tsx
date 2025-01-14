@@ -153,7 +153,7 @@ export default function SwapPage() {
     return (
       <div className="relative mt-16">
       <div 
-        className={`bg-[#2c0a46] p-4 py-6 rounded-lg shadow-lg cursor-pointer ${
+        className={`bg-[#2c0a46] p-1 py-2 md:p-4 md:py-6 rounded-lg shadow-lg cursor-pointer ${
           selectedBox === position ? 'ring-2 ring-blue-900' : ''
         }`}
         onClick={() => setSelectedBox(position)}
@@ -230,7 +230,7 @@ export default function SwapPage() {
         <>
         <button
   onClick={handleConfirm}
-  className={`w-full font-bold text-white py-4 px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
+  className={`w-full font-bold text-white px-3 py-2 md:py-4 md:px-6 rounded-lg shadow-lg my-2 transition-colors duration-300 ${
     isConfirmed 
       ? 'bg-green-500 hover:bg-green-600' 
       : 'bg-gradient-to-r from-blue-400 to-blue-600 hover:from-[#5D2BA6] hover:to-[#7E39EA]'
