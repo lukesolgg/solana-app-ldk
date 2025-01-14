@@ -7,7 +7,7 @@ import SubHeading from '@/components/ui/SubHeading';
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-hidden">
       <div className="fixed inset-0 -z-10">
       <Image
         src={Background}
@@ -24,14 +24,14 @@ export default function Home() {
       <div className="min-h-screen flex flex-col">
         <HeaderIcons />
         
-        <div className="flex-1 flex flex-col items-center justify-center mt-36">
+        <div className="flex-1 flex flex-col items-center justify-center mt-20 md:mt-36">
         
           {/* Text Content */}
-          <Heading text="Welcome to the Home of LDK" className="mb-4 z-10" />
-          <SubHeading text="Purchase SOL, Swap Crypto with Friends" className="mb-16 z-10" />
+          <Heading text="Welcome to the Home of LDK" className="z-10" />
+          <SubHeading text="Purchase SOL, Swap Crypto with Friends" className="z-10" />
 
           {/* Buttons Container */}
-          <div className="flex flex-col items-center gap-4 px-4 z-10">
+          <div className="flex flex-col items-center gap-2 md:gap-4 px-3 md:px-4 z-10 w-full max-w-xs md:max-w-md">
             <Button text="Purchase SOL" href="/purchase-sol"/>
             <Button text="Swap Cryptocurrencies" href="/swap" />
             <Button text="Invite Friends" href="/invite" />
