@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Logosol from '../assets/images/Logosol.png';
 import Background from '../assets/images/mainbgbg.png';
 import Heading from '@/components/ui/Heading';
 import Button from '@/components/ui/Button';
@@ -27,7 +26,7 @@ export default function Home() {
         
           {/* Text Content */}
           <Heading text="Welcome to the Home of LDK" className="mb-4 z-10" />
-          <SubHeading text="This is test text to get the layout correct" className="mb-16 z-10" />
+          <SubHeading text="Purchase SOL, Swap Crypto with Friends" className="mb-16 z-10" />
 
           {/* Buttons Container */}
           <div className="flex flex-col items-center gap-4 px-4 z-10">
