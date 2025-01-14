@@ -151,7 +151,7 @@ export default function SwapPage() {
     const currentAmount = isTop ? amount1 : amount2;
 
     return (
-      <div className="relative mt-4">
+      <div className="relative mt-2">
       <div 
         className={`bg-[#2c0a46] p-4 py-6 rounded-lg shadow-lg cursor-pointer ${
           selectedBox === position ? 'ring-2 ring-blue-900' : ''
@@ -174,7 +174,7 @@ export default function SwapPage() {
             </button>
           </div>
           <div className="text-right">
-            <p className="text-white text-xs md:text-sm">{currentAmount}</p>
+            <p className="text-white text-sm">{currentAmount}</p>
             <span className="text-gray-400">Balance: {currentCurrency.balance}</span>
           </div>
         </div>
@@ -268,7 +268,7 @@ export default function SwapPage() {
 </>
 
         {/* Percentage Buttons */}
-    <div className="grid grid-cols-4 gap-2 mt-2">
+    <div className="grid grid-cols-4 gap-2">
       <button
         onClick={handleMax}
         className="bg-[#2c0a46] text-white rounded-lg font-bold py-2"
@@ -296,7 +296,7 @@ export default function SwapPage() {
     </div>
 
     {/* Keypad section */}
-    <div className="grid grid-cols-3 gap-2 md:gap-3 mt-4">
+    <div className="grid grid-cols-3 gap-2 md:gap-3 mt-2">
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'].map((num) => (
         <button
           key={num}
