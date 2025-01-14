@@ -7,15 +7,17 @@ import SubHeading from '@/components/ui/SubHeading';
 
 export default function Home() {
   return (
-    <div className="relative">
+    <div className="min-h-screen relative">
+      <div className="fixed inset-0 -z-10">
       <Image
         src={Background}
         alt="Background"
         fill
         priority
-        className="object-cover -z-10"
+        className="object-cover"
         quality={100}
       />
+      </div>
       
       <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#290055] via-[#290055] to-transparent z-0" />
       
