@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
+  output: 'standalone',
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    domains: ['*'],
+    unoptimized: true,
   },
   webpack: (config) => {
     config.externals.push('pino-pretty', 'lokijs', 'encoding');
