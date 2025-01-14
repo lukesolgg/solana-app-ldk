@@ -208,7 +208,7 @@ export default function SwapPage() {
       <HeaderIcons />
 
       <div className="flex flex-col px-4 h-full">
-        <div className="space-y-4 my-4">
+        <div className="space-y-3 md:space-y-4 my-3 md:my-4">
           {/* First Currency Box */}
           <CurrencyBox position="top" />
           
@@ -216,9 +216,9 @@ export default function SwapPage() {
           <div className="flex justify-center">
   <button 
     onClick={handleSwap}
-    className="bg-[#3a0066] p-2 rounded-full shadow-lg hover:bg-[#4a0086] transition-colors"
+    className="bg-[#3a0066] p-1.5 md:p-2 rounded-full shadow-lg hover:bg-[#4a0086] transition-colors"
   >
-    <ArrowUpDown className="h-6 w-6 text-blue-600" />
+    <ArrowUpDown className="h-5 w-5 md:h-6 md:w-6 text-blue-600" />
   </button>
 </div>
 
