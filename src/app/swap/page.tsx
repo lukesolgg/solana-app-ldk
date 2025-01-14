@@ -151,9 +151,9 @@ export default function SwapPage() {
     const currentAmount = isTop ? amount1 : amount2;
 
     return (
-      <div className="relative">
+      <div className="relative mt-4">
       <div 
-        className={`bg-[#2c0a46] p-1 py-2 md:p-4 md:py-6 rounded-lg shadow-lg cursor-pointer ${
+        className={`bg-[#2c0a46] p-4 py-6 rounded-lg shadow-lg cursor-pointer ${
           selectedBox === position ? 'ring-2 ring-blue-900' : ''
         }`}
         onClick={() => setSelectedBox(position)}
